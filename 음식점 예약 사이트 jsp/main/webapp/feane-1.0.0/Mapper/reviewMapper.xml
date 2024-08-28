@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewMapper">
+
+    <resultMap type="kr.ac.kopo.vo.ReviewVO" id="reviewMap">
+        <result column="review_id" property="reviewId"/>
+        <result column="user_id" property="userId"/>
+        <result column="reservation_id" property="reservationId"/>
+        <result column="rating" property="rating"/>
+        <result column="comment" property="comment"/>
+        <result column="review_date" property="reviewDate"/>
+    </resultMap>
+
+    <!-- 전체 리뷰 조회 -->
+    <select id="getAllReviews" resultMap="reviewMap">
+        SELECT review_id, user_id, reservation_id, rating, comment, review_date
+        FROM review
+        ORDER BY review_id DESC
+    </select>
+
+    <!-- 리뷰 삽입 -->
+    <insert id="insertReview" parameterType="kr.ac.kopo.vo.ReviewVO">
+        INSERT INTO review (review_id, user_id, reservation_id, rating, comment, review_date)
+        VALUES (#{reviewId}, #{userId}, #{reservationId}, #{rating}, #{comment}, CURRENT_TIMESTAMP)
+    </insert>
+
+</mapper>
