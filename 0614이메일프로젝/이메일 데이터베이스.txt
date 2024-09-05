@@ -1,0 +1,23 @@
+CREATE TABLE users (
+  id VARCHAR(255) PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  address VARCHAR(255),
+  phone VARCHAR(255)
+);
+COMMIT;
+
+
+CREATE TABLE EMAIL (
+  NO NUMBER(5) PRIMARY KEY,                -- 메일 고유번호
+  sender VARCHAR2(20) NOT NULL,            -- 발신자 (users 테이블의 id와 연관)
+  receiver VARCHAR2(20) NOT NULL,          -- 수신자 (users 테이블의 id와 연관)
+  title VARCHAR2(100) DEFAULT '제목없음',   -- 메일 제목
+  content VARCHAR2(300) DEFAULT '내용없음',-- 메일 내용
+  reg_date DATE DEFAULT SYSDATE,           -- 작성 날짜
+  CONSTRAINT fk_sender FOREIGN KEY (sender) REFERENCES users(id),
+  CONSTRAINT fk_receiver FOREIGN KEY (receiver) REFERENCES users(id)
+);
+CREATE SEQUENCE SEQ_EMAIL_NO NOCACHE;
+drop sequence seq_email_no;
